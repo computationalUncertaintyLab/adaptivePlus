@@ -24,6 +24,13 @@ You'll find the following columns inside:
 - lag = releaseEW minus EW
 - MW = Model week or the number of elapsed weeks from the first reported epidemic week to this EW. 
 
+**scores.csv**
+
+This is a data file where the rows correspond to a component model's log score for a given target, location, epidemic week, and release epidemic week. The range of possible ILI percents from 0 to 100 when a model is scored is discretized into 131 intervals: [0,0.1),[0.1,0.2),...,[12.9,13),[13,100]. In addition to the logscore, this file also includes the probability a component model assigned to the true interval, the true value, and the interval (called a bin).
+
+Columns
+```Location,Target,MW,MWtargetWeek,releaseEW,Bin_start_incl,Bin_end_notincl,Value,wili,logscore```
+
 
 **viz/**
 
