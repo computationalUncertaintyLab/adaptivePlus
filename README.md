@@ -32,6 +32,22 @@ Columns
 ```Location,Target,MW,MWtargetWeek,releaseEW,Bin_start_incl,Bin_end_notincl,Value,wili,logscore```
 
 
+**forecastsFormatted**
+This file contains discretized probabilistic predictive distributions for all 21 component models, 11 locations, and 7 targets from the 2011/2012 to 2018/2019 influenza season. A continuous predictive distribution from a component model is discretized into 131 intervals, often called bins: [0,0.1),[0.1,0.2),...[12.9,13.0),[13.0,100.0].  
+
+Columns
+```Location,Target,Unit,Bin_start_incl,Bin_end_notincl,Value,component_model_id,EW,MW```
+
+- Location = ILI is reported for 10 Health and Human Service regions and also at the National level. There are 11 different locations.
+- Target   = An integer from 0-6 that indicated which of the 7 targets this distribtuion is forecasting. 
+- Unit     = Either the string "week" or "percent". The string "week" indicates the forecast assigns probabilities to weeks of the season. The string "percent" indicates the forecast assigns probabilities to ILI percents.
+- Bin_start_incl  = For forecasts of ILI, this is one of 0,0.1,0.2,...,13.0 that denotes the lower bound of an interval which was assigned a probability. For forecasts of weeks this is one of 40,41,...,19.
+- Bin_end_notincl = For forecasts of ILI, this is one of 0.1,0.2,...,100.0 that denotes the upper bound of an interval which was assigned a probability. For forecasts of weeks this is one of 41,42,...,20.
+- Value           = the porbabiliity assigned to the interval [Bin_start_incl, Bin_end_notincl)
+- compononet_model_id = An interger in the set 0,1,2,...,20 that indiciates which component model made this forecast.
+- EW = Epidemic Week: a standardized way to describe activity within one week. Format is YYYYWW 
+- MW = Model week or the number of elapsed weeks from the first reported epidemic week to this EW. 
+
 **viz/**
 
 plotEpiCurve.py
