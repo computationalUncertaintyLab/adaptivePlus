@@ -7,8 +7,7 @@ import numpy as np
 import pandas as pd
 
 from mods.index import index
-
-import dask.dataframe as dd
+from mods.epiTools import fromEW2Season
 
 if __name__ == "__main__":
 
@@ -24,6 +23,15 @@ if __name__ == "__main__":
     weekAheadForecasts["Bin_start_incl"] = weekAheadForecasts.Bin_start_incl.astype(float)
     weekAheadForecasts["Bin_end_notincl"] = weekAheadForecasts.Bin_end_notincl.astype(float)
 
+    # add in the season correpsondin to EW
+    ewSeason = {"EW":[],"Season":[]}
+    for e in weekAheadForecasts.EW.unique():
+        s = fromEW2Season(e)
+        ewSeason["EW"].append(e)
+        ewSeason["Season"].append(s)
+    ewSeason = pd.DataFrame(ewSeason)
+    weekAheadForecasts = weekAheadForecasts.merge(ewSeason,on="EW")
+    
     # add Bins to epidata for merging
     epidata["Bin_start_incl"]  = np.floor(epidata.wili*10)/10
     epidata["Bin_end_notincl"] = np.ceil(epidata.wili*10)/10
@@ -37,5 +45,5 @@ if __name__ == "__main__":
     
     scores["Value"] = np.round(scores.Value,3)
     
-    scores = scores[["Location","Target","MW","MWtargetWeek","releaseEW","Bin_start_incl","Bin_end_notincl","Value","wili","logscore"]]
+    scores = scores[["Location","Target","MW","MWtargetWeek","releaseEW","Season","component_model_id","Bin_start_incl","Bin_end_notincl","Value","wili","logscore"]]
     scores.to_csv("scores.csv",index=False)
