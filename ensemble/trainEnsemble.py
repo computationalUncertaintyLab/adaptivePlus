@@ -29,7 +29,10 @@ if __name__ == "__main__":
 
     firstRun = 1 # This is used for writing our data out to file. 
     season = "2010/2011"
-    for releaseEW in releaseEWs:
+    for releaseEW in releaseEWs[1:]:
+        print("ReleaseEW")
+        print(releaseEW)
+        
         subsetOfScoresAvailable = scores[scores.releaseEW<=releaseEW]
 
         mostRecentSeason = subsetOfScoresAvailable.iloc[-1].Season
@@ -41,7 +44,7 @@ if __name__ == "__main__":
 
         means,quantiles = ae.computeWeightStats()
 
-        means["season"] = season
+        means["season"]    = season
         means["releaseEW"] = releaseEW
 
         if firstRun:
